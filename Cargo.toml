@@ -1,0 +1,11 @@
+[package]
+name = "bevy_merging_game"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = "0.15.3"
+bevy_rapier2d = { version = "0.29.0", features = ["rapier-debug-render"] }
+
+[profile.dev.package.bevy_rapier2d]
+opt-level = 3
