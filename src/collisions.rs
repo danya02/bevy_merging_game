@@ -15,6 +15,7 @@ fn on_collide(
     mut collision_events: EventReader<CollisionEvent>,
     mut commands: Commands,
     q_ball: Query<(&Transform, &Ball)>,
+    asset_server: Res<AssetServer>,
 ) {
     for collision_event in collision_events.read() {
         if let CollisionEvent::Started(a, b, flags) = collision_event {
@@ -35,7 +36,11 @@ fn on_collide(
                         continue;
                     }
 
-                    commands.spawn(BallBundle::new(avg_pos, first_ball.phase + 1));
+                    commands.spawn(BallBundle::new(
+                        avg_pos,
+                        first_ball.phase + 1,
+                        &asset_server,
+                    ));
                 }
             }
         }

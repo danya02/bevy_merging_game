@@ -67,12 +67,17 @@ fn onclick_cursor(
     mut commands: Commands,
     q_cursor: Query<&Transform, With<CursorMarker>>,
     mut ev_read: EventReader<MouseButtonInput>,
+    asset_server: Res<AssetServer>,
 ) {
     for ev in ev_read.read() {
         if ev.state.is_pressed() {
             if ev.button == MouseButton::Left {
                 let cursor_transform = q_cursor.single();
-                commands.spawn(BallBundle::new(cursor_transform.translation.truncate(), 0));
+                commands.spawn(BallBundle::new(
+                    cursor_transform.translation.truncate(),
+                    0,
+                    &asset_server,
+                ));
             }
         }
     }

@@ -1,0 +1,1 @@
+These files were obtained from https://www.ecb.europa.eu/euro/coins and may not be under a free license.
