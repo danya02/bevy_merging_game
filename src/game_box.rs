@@ -9,6 +9,28 @@ pub struct GameBox {
     pub height: f32,
 }
 
+const WALL_THICKNESS: f32 = 5.0;
+
+impl GameBox {
+    /// Get the X coordinate of the inner edge of the left wall.
+    /// Assuming that the box is centered at the origin.
+    pub fn left_wall_inner_x(&self) -> f32 {
+        -self.width / 2.0 + WALL_THICKNESS
+    }
+
+    /// Get the X coordinate of the inner edge of the right wall.
+    /// Assuming that the box is centered at the origin.
+    pub fn right_wall_inner_x(&self) -> f32 {
+        self.width / 2.0 - WALL_THICKNESS
+    }
+
+    /// Get the Y coordinate of the outer edge of the ceiling.
+    /// Assuming that the box is centered at the origin.
+    pub fn ceiling_outer_y(&self) -> f32 {
+        self.height / 2.0 + WALL_THICKNESS
+    }
+}
+
 pub struct GameBoxPlugin;
 
 impl Plugin for GameBoxPlugin {
@@ -44,7 +66,7 @@ fn spawn_game_box(mut commands: Commands) {
         .spawn((
             Transform::from_xyz(-width / 2.0, 0.0, 0.0),
             LeftWall,
-            Collider::cuboid(10.0, height / 2.0),
+            Collider::cuboid(WALL_THICKNESS * 2.0, height / 2.0),
         ))
         .set_parent(root);
 
@@ -52,7 +74,7 @@ fn spawn_game_box(mut commands: Commands) {
         .spawn((
             Transform::from_xyz(width / 2.0, 0.0, 0.0),
             RightWall,
-            Collider::cuboid(10.0, height / 2.0),
+            Collider::cuboid(WALL_THICKNESS * 2.0, height / 2.0),
         ))
         .set_parent(root);
 
@@ -60,7 +82,7 @@ fn spawn_game_box(mut commands: Commands) {
         .spawn((
             Transform::from_xyz(0.0, -height / 2.0, 0.0),
             Floor,
-            Collider::cuboid(width / 2.0, 10.0),
+            Collider::cuboid(width / 2.0, WALL_THICKNESS * 2.0),
         ))
         .set_parent(root);
 
@@ -68,7 +90,7 @@ fn spawn_game_box(mut commands: Commands) {
         .spawn((
             Transform::from_xyz(0.0, height / 2.0, 0.0),
             Ceiling,
-            Collider::cuboid(width / 2.0, 10.0),
+            Collider::cuboid(width / 2.0, WALL_THICKNESS * 2.0),
             Sensor,
         ))
         .set_parent(root);
